@@ -1,12 +1,28 @@
 <template>
   <div id="app">
+    <div class="page" v-if="showSpinner">
+      <b-spinner class="spinner" variant="primary" key="primary"></b-spinner>
+    </div>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <menu-header></menu-header>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+import MenuHeader from "@/components/Menu.vue";
+import { mapGetters } from 'vuex';
+
+export default {
+  components: {
+    'menu-header': MenuHeader
+  },
+  computed: {
+      ...mapGetters(["showSpinner"])
+  }
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -14,7 +30,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #000;
 }
 
 #nav {
@@ -22,11 +38,25 @@
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #fff;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #000;
     }
   }
+}
+
+.page {
+  position: absolute;
+  background-color: #fff;
+  opacity: 0.5;
+  z-index: 25;
+  width: 100%;
+  height: 100%;
+}
+
+.spinner {
+  position: relative;
+  top: 50%;
 }
 </style>
